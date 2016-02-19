@@ -9,12 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Pedro Benevides"]
   spec.email         = ["pedroaugusto@gmail.com"]
 
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com' to prevent pushes to rubygems.org, or delete to allow pushes to any server."
-  end
-
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
+  spec.summary       = "Client do WebService SOAP do IESDE"
+  spec.description   = "Esta não é uma versão oficial"
   spec.homepage      = "https://github.com/fortesinformatica/iesde"
   spec.license       = "MIT"
 
@@ -25,4 +21,8 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.8"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_dependency "savon", "~> 2.10"
+  spec.add_dependency "json", "~> 1.7"
+  spec.add_dependency "activesupport", "~> 4.2"
+
 end
