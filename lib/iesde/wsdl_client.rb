@@ -3,7 +3,7 @@ module Iesde
 
     SAVON_WEB_SERVICE_ENCODING = "iso-8859-1"
 
-    attr_accessor :action, :client, :format
+    attr_accessor :action, :client, :format, :model
 
     def self.create client_name
       client_name.to_s.prepend("iesde/clients/").classify.constantize.new
@@ -16,11 +16,15 @@ module Iesde
     def check_params params
       # Clients must override
       # return true if valid
+      ""
     end
 
-    def map params
-      # Clients must override
-      # return result as Iesde objects
+    def map response
+      JSON.parse(response).collect do |item|
+        model.new *item.values
+      end
+    rescue JSON::ParserError
+      raise Iesde::Error::WSError.new(response)
     end
 
     def run params

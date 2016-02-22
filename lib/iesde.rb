@@ -6,6 +6,7 @@ require 'savon'
 module Iesde
   module Clients
     autoload :ListaCurso,"iesde/clients/lista_curso"
+    autoload :ObtemAula,"iesde/clients/obtem_aulas"
   end
 
   module Error
@@ -16,6 +17,7 @@ module Iesde
   autoload :VERSION, "iesde/version"
   autoload :Config,"iesde/config"
   autoload :Curso,"iesde/curso"
+  autoload :Aula,"iesde/aula"
   autoload :WSDLClient,"iesde/wsdl_client"
 
   mattr_accessor :config
