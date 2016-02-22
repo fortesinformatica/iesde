@@ -14,10 +14,13 @@ module Iesde
     autoload :WSError,'iesde/error/ws_error'
   end
 
+  module Model
+    autoload :Curso,"iesde/model/curso"
+    autoload :Aula,"iesde/model/aula"
+  end
+
   autoload :VERSION, "iesde/version"
   autoload :Config,"iesde/config"
-  autoload :Curso,"iesde/curso"
-  autoload :Aula,"iesde/aula"
   autoload :WSDLClient,"iesde/wsdl_client"
 
   mattr_accessor :config

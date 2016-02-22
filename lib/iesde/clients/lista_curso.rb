@@ -3,7 +3,7 @@ module Iesde
     class ListaCurso < Iesde::WSDLClient
 
       def initialize
-        @model = Iesde::Curso
+        @model = Iesde::Model::Curso
         @action = "listaCurso"
         @format = [ :login, :senha, :busca, :tipo, :site, :idCurso ]
       end
@@ -18,7 +18,7 @@ module Iesde
         errors << "[Quando tipo for P precisa especificar idCurso]" if params[:tipo] == 'P' && params[:idCurso].blank?
         errors
       end
-      
+
     end
   end
 end

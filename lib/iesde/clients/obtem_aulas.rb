@@ -3,7 +3,7 @@ module Iesde
     class ObtemAula < Iesde::WSDLClient
 
       def initialize
-        @model = Iesde::Aula
+        @model = Iesde::Model::Aula
         @action = "obtemAulas"
         @format = [ :login, :senha, :loginAluno, :cpf, :curso, :ancora, :tipo ]
       end
