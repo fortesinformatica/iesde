@@ -1,5 +1,3 @@
-require 'savon'
-
 module Iesde
   class WSDLClient
 
@@ -20,13 +18,19 @@ module Iesde
       # return true if valid
     end
 
+    def map params
+      # Clients must override
+      # return result as Iesde objects
+    end
+
     def run params
       params = fetch_user_credentials(params) if Iesde.config && params[:login].blank? && params[:senha].blank?
       errors = check_params params
-      raise Iesde::ValidationError.new(errors) unless errors.blank?
+      raise Iesde::Error::ValidationError.new(errors) unless errors.blank?
       
       ws_response = client.call @action.underscore.to_sym, message: params, attributes: { name: "#{@action}Request"}
-      return ws_response.body[@action.underscore.concat("_response").to_sym][:resultado]
+      raw_response = ws_response.body[@action.underscore.concat("_response").to_sym][:resultado]
+      map raw_response
     end
 
     private
