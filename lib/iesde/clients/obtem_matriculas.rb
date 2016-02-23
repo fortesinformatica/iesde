@@ -2,6 +2,8 @@ module Iesde
   module Clients
     class ObtemMatricula < Iesde::WSDLClient
 
+      CODIGO_RETORNO_NENHUMA_ENCONTRADA = "010"
+
       def initialize
         @model = Iesde::Model::Matricula
         @action = "obtemMatriculas"

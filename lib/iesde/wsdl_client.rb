@@ -1,12 +1,16 @@
 module Iesde
   class WSDLClient
 
+    CLIENTS_FOLDER = 'iesde/clients/'
     SAVON_WEB_SERVICE_ENCODING = "iso-8859-1"
+    DEFAULT_WSDL_URL = "http://ws.videoaulasonline.com.br/acoes_webservice/:action/wsdl"
+    REQUEST_SUFIX = 'Request'
+    RESPONSE_PARAM_SUFIX = '_response'
 
     attr_accessor :action, :client, :format, :obligatory_params, :model, :wsdl_url
 
     def self.create client_name
-      client_name.to_s.prepend("iesde/clients/").classify.constantize.new
+      client_name.to_s.prepend(CLIENTS_FOLDER).classify.constantize.new
     end
 
     def fetch_user_credentials params
@@ -22,7 +26,7 @@ module Iesde
     def check_obligatory_params params
       errors = ""
       @obligatory_params.each do |param|
-        errors << "#{param} - Parâmetro Obrigatório!" if params[param].blank?
+        errors << "#{param} - Parâmetro Obrigatório!" if params[param].nil?
       end
       errors
     end
@@ -57,9 +61,8 @@ module Iesde
       params = fetch_user_credentials(params) if Iesde.config && params[:login].blank? && params[:senha].blank?
       errors = validate params
       raise Iesde::Error::ValidationError.new(errors) unless errors.blank?
-      
-      ws_response = client.call @action.underscore.to_sym, message: params, attributes: { name: "#{@action}Request"}
-      raw_response = ws_response.body[@action.underscore.concat("_response").to_sym][response_param]
+      ws_response = client.call @action.underscore.to_sym, message: params, attributes: { name: (@action + REQUEST_SUFIX) }
+      raw_response = ws_response.body[@action.underscore.concat(RESPONSE_PARAM_SUFIX).to_sym][response_param]
       map raw_response
     end
 
@@ -70,7 +73,7 @@ module Iesde
     end
 
     def build_wsdl_url
-      @wsdl_url || "http://ws.videoaulasonline.com.br/acoes_webservice/#{@action}/wsdl"
+      @wsdl_url || DEFAULT_WSDL_URL.gsub(/:action/, @action)
     end
   end
 end

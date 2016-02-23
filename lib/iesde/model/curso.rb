@@ -1,6 +1,11 @@
 module Iesde
   module Model
     class Curso
+
+      TIPO_CURSOS_PADRAO = %w(C E)
+      TIPO_CURSO_PACOTE = 'P'
+      SITES_CURSOS = %w(4 22 10 7 6 13)
+
       attr_accessor :tipo, :id, :nome, :objetivo, :temas, :autores, :carga_horaria, :valor, :quant_aulas, :categoria, :video_demo, :pdf_demo, :login, :senha
       attr_reader :aulas, :matriculas
 
@@ -12,7 +17,6 @@ module Iesde
         curso = nil
 
         if !params[:id].blank? && !params[:login].blank? && !params[:senha].blank?
-
           search_params = { login: params[:login], senha: params[:senha], busca: "", tipo: "", site: "", idCurso: params[:id].to_s }
 
           curso = buscar_cursos_padrao search_params
@@ -39,7 +43,7 @@ module Iesde
         begin
           @matriculas ||= buscar_matriculas
         rescue Iesde::Error::WSError => e
-          if e.code == "010"
+          if e.code == Iesde::Clients::ObtemMatricula::CODIGO_RETORNO_NENHUMA_ENCONTRADA
             @matriculas = []
           else
             raise e
@@ -56,7 +60,7 @@ module Iesde
 
       def self.buscar_cursos_padrao params
         curso = nil
-        %w(C E).each do |tipo|
+        TIPO_CURSOS_PADRAO.each do |tipo|
           begin
             params[:tipo] = tipo
             cursos = Curso.buscar params
@@ -72,8 +76,8 @@ module Iesde
 
       def self.buscar_cursos_nos_pacotes params
         curso = nil
-        params[:tipo] = 'P'
-        %w(4 22 10 7 6 13).each do |site|
+        params[:tipo] = TIPO_CURSO_PACOTE
+        SITES_CURSOS.each do |site|
           begin
             params[:site] = site
             cursos = Curso.buscar params
