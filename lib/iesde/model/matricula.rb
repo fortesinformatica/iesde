@@ -17,7 +17,7 @@ module Iesde
       end
 
       def curso
-        @curso ||= Iesde::Model::Curso.find id: @curso_id, login: @login, senha: @senha
+        @curso ||= Curso.find id: @curso_id, login: @login, senha: @senha
       end
 
     end
