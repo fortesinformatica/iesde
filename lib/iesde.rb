@@ -9,6 +9,7 @@ module Iesde
     autoload :ObtemAula,"iesde/clients/obtem_aulas"
     autoload :ObtemMatricula,"iesde/clients/obtem_matriculas"
     autoload :Cadastro,"iesde/clients/cadastro"
+    autoload :InativaAcesso,"iesde/clients/inativa_acesso"
   end
 
   module Error

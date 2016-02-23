@@ -24,6 +24,15 @@ module Iesde
         end
       end
 
+      def self.inativar params
+        client_inativa_acesso = WSDLClient.create :inativa_acesso
+        client_inativa_acesso.run params
+      end
+
+      def inativar
+        Matricula.remover login: @login, senha: @senha, :"LoginID" => @id
+      end
+
       def curso
         @curso ||= Curso.find id: @curso_id, login: @login, senha: @senha
       end
