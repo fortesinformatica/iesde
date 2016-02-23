@@ -3,7 +3,7 @@ module Iesde
 
     SAVON_WEB_SERVICE_ENCODING = "iso-8859-1"
 
-    attr_accessor :action, :client, :format, :model
+    attr_accessor :action, :client, :format, :model, :wsdl_url
 
     def self.create client_name
       client_name.to_s.prepend("iesde/clients/").classify.constantize.new
@@ -40,7 +40,11 @@ module Iesde
     private
 
     def client
-      @client ||= Savon.client encoding: SAVON_WEB_SERVICE_ENCODING, wsdl: "http://ws.videoaulasonline.com.br/acoes_webservice/#{@action}/wsdl"
+      @client ||= Savon.client encoding: SAVON_WEB_SERVICE_ENCODING, wsdl: build_wsdl_url
+    end
+
+    def build_wsdl_url
+      @wsdl_url || "http://ws.videoaulasonline.com.br/acoes_webservice/#{@action}/wsdl"
     end
   end
 end

@@ -16,6 +16,14 @@ module Iesde
         end
       end
 
+      def self.criar params
+        client_cadastro = WSDLClient.create :cadastro
+        if client_cadastro.run(params)
+          matriculas = buscar params.except(:loginAluno, :cpf, :duracao, :valor)
+          matriculas.select { |matricula| matricula.email_aluno == params[:loginAluno] }
+        end
+      end
+
       def curso
         @curso ||= Curso.find id: @curso_id, login: @login, senha: @senha
       end

@@ -8,6 +8,7 @@ module Iesde
     autoload :ListaCurso,"iesde/clients/lista_curso"
     autoload :ObtemAula,"iesde/clients/obtem_aulas"
     autoload :ObtemMatricula,"iesde/clients/obtem_matriculas"
+    autoload :Cadastro,"iesde/clients/cadastro"
   end
 
   module Error
