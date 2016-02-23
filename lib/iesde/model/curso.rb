@@ -48,6 +48,10 @@ module Iesde
         @matriculas
       end
 
+      def alunos
+        matriculas.map &:aluno
+      end
+
       private
 
       def self.buscar_cursos_padrao params

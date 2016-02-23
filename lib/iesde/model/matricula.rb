@@ -37,6 +37,10 @@ module Iesde
         @curso ||= Curso.find id: @curso_id, login: @login, senha: @senha
       end
 
+      def aluno
+        @aluno ||= Aluno.new @email_aluno, @cpf_aluno, @login, @senha
+      end
+
     end
   end
 end
