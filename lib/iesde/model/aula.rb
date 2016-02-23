@@ -13,7 +13,7 @@ module Iesde
       end
 
       def curso
-        @curso ||= Iesde::Model::Curso.new id: @curso_id, nome: @nome_curso, login: @login, senha: @senha unless @curso_id.blank?
+        @curso ||= Iesde::Model::Curso.find id: @curso_id, login: @login, senha: @senha
       end
 
     end

@@ -7,6 +7,7 @@ module Iesde
   module Clients
     autoload :ListaCurso,"iesde/clients/lista_curso"
     autoload :ObtemAula,"iesde/clients/obtem_aulas"
+    autoload :ObtemMatricula,"iesde/clients/obtem_matriculas"
   end
 
   module Error
@@ -17,6 +18,7 @@ module Iesde
   module Model
     autoload :Curso,"iesde/model/curso"
     autoload :Aula,"iesde/model/aula"
+    autoload :Matricula,"iesde/model/matricula"
   end
 
   autoload :VERSION, "iesde/version"
