@@ -10,6 +10,7 @@ module Iesde
     autoload :ObtemMatricula,"iesde/clients/obtem_matriculas"
     autoload :Cadastro,"iesde/clients/cadastro"
     autoload :InativaAcesso,"iesde/clients/inativa_acesso"
+    autoload :Logout,"iesde/clients/logout"
   end
 
   module Error
@@ -21,6 +22,7 @@ module Iesde
     autoload :Curso,"iesde/model/curso"
     autoload :Aula,"iesde/model/aula"
     autoload :Matricula,"iesde/model/matricula"
+    autoload :Aluno,"iesde/model/aluno"
   end
 
   autoload :VERSION, "iesde/version"

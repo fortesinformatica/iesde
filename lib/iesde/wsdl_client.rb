@@ -27,13 +27,17 @@ module Iesde
       raise Iesde::Error::WSError.new(response)
     end
 
+    def response_param
+      :resultado
+    end
+
     def run params
       params = fetch_user_credentials(params) if Iesde.config && params[:login].blank? && params[:senha].blank?
       errors = check_params params
       raise Iesde::Error::ValidationError.new(errors) unless errors.blank?
       
       ws_response = client.call @action.underscore.to_sym, message: params, attributes: { name: "#{@action}Request"}
-      raw_response = ws_response.body[@action.underscore.concat("_response").to_sym][:resultado]
+      raw_response = ws_response.body[@action.underscore.concat("_response").to_sym][response_param]
       map raw_response
     end
 
