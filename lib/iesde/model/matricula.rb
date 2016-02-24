@@ -20,7 +20,7 @@ module Iesde
         client_cadastro = WSDLClient.create :cadastro
         if client_cadastro.run(params)
           matriculas = buscar params.except(:loginAluno, :cpf, :duracao, :valor)
-          matriculas.select { |matricula| matricula.email_aluno == params[:loginAluno] }
+          matriculas.select { |matricula| matricula.email_aluno == params[:loginAluno] }.first
         end
       end
 
@@ -30,7 +30,7 @@ module Iesde
       end
 
       def inativar
-        Matricula.remover login: @login, senha: @senha, :"LoginID" => @id
+        Matricula.inativar login: @login, senha: @senha, :"LoginID" => @id
       end
 
       def curso
