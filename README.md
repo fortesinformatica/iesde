@@ -1,4 +1,9 @@
-- [Iesde](#iesde)
+# Iesde
+
+Interface para acesso ao WebService do [Iesde][siteiesde] para sistemas Rails. Não se trata de uma ferramenta oficial pois foi desenvolvida por necessidade dos nossos desenvolvedores. Sintam-se livres para contribuir.
+
+## Índice
+\- [Iesde](#iesde)
   - [Versão](#vers%C3%A3o)
   - [Instalação](#instala%C3%A7%C3%A3o)
   - [Uso](#uso)
@@ -11,10 +16,6 @@
     - [Logout](#logout)
   - [Default Configs](#default-configs)
   - [Relacionamentos](#relacionamentos)
-
-# Iesde
-
-Interface para acesso ao WebService do [Iesde][siteiesde] para sistemas Rails. Não se trata de uma ferramenta oficial pois foi desenvolvida por necessidade dos nossos desenvolvedores. Sintam-se livres para contribuir.
 
 ## Versão
 1.0.0 - Seguindo a documentação v14 do WebService
