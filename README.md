@@ -35,7 +35,7 @@ gem 'iesde', '~> 1.0.0'
 
 > Todas as buscas no WebService exigem os parâmetros **login** e **senha**.
 > Caso você possua apenas um usuário de acesso ao WebService, você pode configurar esses parâmetros em um initializer. 
-> Veja na seção Default Configs.
+> Veja na seção [Default Configs](#default-configs).
 
 ### Listagem de Cursos
 
