@@ -239,4 +239,6 @@ curso.alunos
 
 MIT Licence. Copyright (c) 2016 Fortes Tecnologia. http://www.fortestecnologia.com.br
 
+![ft](http://www.fortestecnologia.com.br/templates/fortesinfo/images/grupo-fortes.png)
+
 [siteiesde]:<http://www.iesde.com.br>
