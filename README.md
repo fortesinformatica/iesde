@@ -18,17 +18,17 @@ Interface para acesso ao WebService do [Iesde][siteiesde] para sistemas Rails. N
   - [Relacionamentos](#relacionamentos)
 
 ## Versão
-1.0.0 - Seguindo a documentação v14 do WebService
+1.0.1 - Seguindo a documentação v14 do WebService
 
 ## Instalação
 
 ```sh
-gem install iesde -v 1.0.0
+gem install iesde -v 1.0.1
 ```
 
 Ou no seu Gemfile
 ```ruby
-gem 'iesde', '~> 1.0.0'
+gem 'iesde', '~> 1.0.1'
 ```
 
 ## Uso

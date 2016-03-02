@@ -9,7 +9,11 @@ module Iesde
 
       def self.buscar params
         client_obtem_aulas = WSDLClient.create :obtem_aulas
-        client_obtem_aulas.run params
+        aulas = client_obtem_aulas.run params
+        aulas.each do |aula|
+          aula.login = params[:login]
+          aula.senha = params[:senha]
+        end
       end
 
       def curso
