@@ -11,6 +11,7 @@ module Iesde
     autoload :Cadastro,"iesde/clients/cadastro"
     autoload :InativaAcesso,"iesde/clients/inativa_acesso"
     autoload :Logout,"iesde/clients/logout"
+    autoload :Buscararquivo,"iesde/clients/buscararquivo"
   end
 
   module Error
