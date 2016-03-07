@@ -11,6 +11,7 @@ Interface para acesso ao WebService do [Iesde][siteiesde] para sistemas Rails. N
     - [Busca de curso por Id](#busca-de-curso-por-id)
     - [Listagem de Aulas](#listagem-de-aulas)
     - [Listagem de Matrículas](#listagem-de-matr%C3%ADculas)
+    - [PDF](#pdf)
     - [Matricular Aluno](#matricular-aluno)
     - [Inativação de Aluno](#inativa%C3%A7%C3%A3o-de-aluno)
     - [Logout](#logout)
@@ -34,7 +35,7 @@ gem 'iesde', '~> 1.0.1'
 ## Uso
 
 > Todas as buscas no WebService exigem os parâmetros **login** e **senha**.
-> Caso você possua apenas um usuário de acesso ao WebService, você pode configurar esses parâmetros em um initializer. 
+> Caso você possua apenas um usuário de acesso ao WebService, você pode configurar esses parâmetros em um initializer.
 > Veja na seção [Default Configs](#default-configs).
 
 ### Listagem de Cursos
@@ -42,11 +43,11 @@ gem 'iesde', '~> 1.0.1'
 Retorna um array de ```Iesde::Model::Curso```
 ```ruby
 parametros = {
-    login:  "0123456789", 
-    senha: "9d7d5741ab23397aa15937fcd4121a32", 
-    busca: "", 
-    tipo: "C", 
-    site: "", 
+    login:  "0123456789",
+    senha: "9d7d5741ab23397aa15937fcd4121a32",
+    busca: "",
+    tipo: "C",
+    site: "",
     idCurso: ""
 }
 cursos = Iesde::Model::Curso.buscar(parametros)
@@ -72,12 +73,12 @@ Retorna um array de ```Iesde::Model::Aula```
 
 ```ruby
 parametros = {
-    login: "0123456789", 
-    senha: "9d7d5741ab23397aa15937fcd4121a32", 
-    loginAluno: "", 
-    cpf: "", 
-    curso: "1000", 
-    ancora: "", 
+    login: "0123456789",
+    senha: "9d7d5741ab23397aa15937fcd4121a32",
+    loginAluno: "",
+    cpf: "",
+    curso: "1000",
+    ancora: "",
     tipo: "C"
 }
 aulas = Iesde::Model::Aula.buscar(parametros)
@@ -88,7 +89,7 @@ Ou já tendo o curso carregado...
 
 ```ruby
 curso.aulas
-=> [#<Iesde::Model::Aula>, #<Iesde::Model::Aula>, #<Iesde::Model::Aula>, ...] 
+=> [#<Iesde::Model::Aula>, #<Iesde::Model::Aula>, #<Iesde::Model::Aula>, ...]
 ```
 
 ### Listagem de Matrículas
@@ -97,9 +98,9 @@ Retorna um array de ```Iesde::Model::Matricula ```
 
 ```ruby
 parametros = {
-    login: "0123456789", 
-    senha: "9d7d5741ab23397aa15937fcd4121a32", 
-    curso: "6376", 
+    login: "0123456789",
+    senha: "9d7d5741ab23397aa15937fcd4121a32",
+    curso: "6376",
     tipo: "C"
 }
 Iesde::Model::Matricula.buscar(parametros)
@@ -111,6 +112,19 @@ Ou já tendo o curso carregado...
 curso.matriculas
 => [#<Iesde::Model::Matricula>, #<Iesde::Model::Matricula>, #<Iesde::Model::Matricula>, ...]
 ```
+### PDF
+
+Para obter o link do PDF da aula, basta carregar o modelo ```Iesde::Model::Aula``` e usar os métodos auxiliares:
+
+```ruby
+# passando email e cpf do aluno...
+aula.link_pdf "aluno@minhaorganizacao.com.br", "12345678900"
+=> "http://ws.videoaulasonline.com.br/pdf/imprime/caracteres_malucos"
+
+# passando um modelo Iesde::Model::Aluno...
+aula.link_para aluno
+=> "http://ws.videoaulasonline.com.br/pdf/imprime/caracteres_malucos"
+```
 
 ### Matricular Aluno
 
@@ -118,13 +132,13 @@ Realiza a matrícula no WebService e retorna um ```Iesde::Model::Matricula```
 
 ```ruby
 parametros = {
-    login: "0190001388", 
-    senha: "9d7d5741ab23397afeb81829a3d5ebd7", 
-    loginAluno: "aluno@minhaorganizacao.com.br", 
-    cpf: "12345678900", 
-    curso: "1000", 
-    duracao: "90", 
-    tipo: "C", 
+    login: "0190001388",
+    senha: "9d7d5741ab23397afeb81829a3d5ebd7",
+    loginAluno: "aluno@minhaorganizacao.com.br",
+    cpf: "12345678900",
+    curso: "1000",
+    duracao: "90",
+    tipo: "C",
     valor: ""
 }
 matricula = Iesde::Model::Matricula.criar(parametros)
@@ -137,8 +151,8 @@ Inativa a matrícula e retorna ```true``` se sucesso.
 
 ```ruby
 parametros = {
-    login: "0190001388", 
-    senha: "9d7d5741ab23397afeb81829a3d5ebd7", 
+    login: "0190001388",
+    senha: "9d7d5741ab23397afeb81829a3d5ebd7",
     :"LoginID" => "12345"
 }
 Iesde::Model::Matricula.inativar(parametros)
@@ -157,9 +171,9 @@ Realiza logout do aluno e retorna ```true``` se sucesso.
 
 ```ruby
 parametros = {
-    login: "0190001388", 
-    senha: "9d7d5741ab23397afeb81829a3d5ebd7", 
-    loginAluno: "aluno@minhaorganizacao.com.br", 
+    login: "0190001388",
+    senha: "9d7d5741ab23397afeb81829a3d5ebd7",
+    loginAluno: "aluno@minhaorganizacao.com.br",
     cpf: "12345678900"
 }
 Iesde::Model::Aluno.logout(parametros)

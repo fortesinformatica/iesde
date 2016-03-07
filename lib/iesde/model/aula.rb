@@ -20,6 +20,15 @@ module Iesde
         @curso ||= Curso.find id: @curso_id, login: @login, senha: @senha
       end
 
+      def link_pdf email_aluno, cpf_aluno
+        client_buscar_arquivo = WSDLClient.create :buscararquivo
+        client_buscar_arquivo.run usuario: email_aluno, senha: cpf_aluno, curso: @curso_id, aula: @id, tipo: curso.tipo
+      end
+
+      def pdf_para aluno
+        link_pdf aluno.login_aluno, aluno.cpf
+      end
+
     end
   end
 end
