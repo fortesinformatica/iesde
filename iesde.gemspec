@@ -6,10 +6,10 @@ require 'iesde/version'
 Gem::Specification.new do |spec|
   spec.name          = "iesde"
   spec.version       = Iesde::VERSION
-  spec.authors       = ["Pedro Benevides"]
-  spec.email         = ["pedroaugusto@gmail.com"]
+  spec.authors       = ["Pedro Benevides", "Heron Medeiros"]
+  spec.email         = ["pedroaugusto@gmail.com", "heron.medeiros@gmail.com"]
 
-  spec.summary       = "Client do WebService SOAP do IESDE"
+  spec.summary       = "Client do WebService REST do IESDE"
   spec.description   = "Esta não é uma versão oficial"
   spec.homepage      = "https://github.com/fortesinformatica/iesde"
   spec.license       = "MIT"
@@ -24,5 +24,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "savon", "~> 2.10"
   spec.add_dependency "json", "~> 1.7"
   spec.add_dependency "activesupport", "~> 4.2"
+  spec.add_dependency "actionview"
 
 end

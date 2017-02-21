@@ -1,6 +1,6 @@
 module Iesde
   module Clients
-    class ObtemMatricula < Iesde::WSDLClient
+    class ObtemMatricula < Iesde::API
 
       CODIGO_RETORNO_NENHUMA_ENCONTRADA = "010"
 
@@ -8,7 +8,7 @@ module Iesde
         @model = Iesde::Model::Matricula
         @action = "obtemMatriculas"
         @format = [ :login, :senha, :curso, :tipo ]
-        @obligatory_params = [ :login, :senha, :curso, :tipo ]
+        
       end
 
       def check_params params
