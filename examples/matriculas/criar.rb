@@ -1,20 +1,24 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../../../lib', __FILE__)
 require "awesome_print"
 require 'iesde'
 
-Iesde.configure do |c| 
+Iesde.configure do |c|
   c.user        = ENV['IESDE_USER']
   c.password    = ENV['IESDE_PWD']
   c.ead_api_key = ENV['EAD_API_KEY']
 end
 
 
+
 # Criar matriculas
+cpf        = '82432858816'
+cpf_errado = '824328816'
+
 params = {
   'CursoID'     => 105689 ,
   'PoloID'      => 1,
   'Nome'        => 'Usuario Legal',
-  'CPF'         => '82432858816',
+  'CPF'         => cpf_errado,
   'Email'       => 'usuario@menoslegal.com',
   'RG'          => '2003000152000',
   'OrgaoRG'     => 'Pulmão',
@@ -31,14 +35,7 @@ params = {
   'Sexo'        => 'M'
 }
 
-matricula = Iesde::Model::Matricula.criar params
+# matricula = Iesde::Model::Matricula.criar params
+matricula = Iesde::Model::Matricula.criar(params)
 
-ap matricula.inativar!
-
-# binding.pry
-
-# ap matricula
-
-# # Obter matriculas
-# matriculas = Iesde::Model::Matricula.buscar
-# ap matriculas
+ap matricula
