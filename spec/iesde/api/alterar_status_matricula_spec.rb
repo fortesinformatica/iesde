@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Iesde::Api::AlterarStatusMatricula do
-  let(:format) { :json }
-  let(:opts)   { { a: 1 } }
+  let(:format)  { :json }
+  let(:opts)    { { a: 1 } }
   let(:request) { double('request') }
-  let(:status) {  '{"status": 1 }' }
+  let(:status)  {  '{"status": 1 }' }
 
   subject      { Iesde::Api::AlterarStatusMatricula.new(format, opts) }
 
@@ -35,10 +35,7 @@ describe Iesde::Api::AlterarStatusMatricula do
       let(:mensagem) { 'Algo de errado' }
 
       before do
-        allow(request).to receive(:execute) { '{ "status": false, "msg":"asdf" }' 
-        }
-        # { "[{'status': false, mensagem: #{mensagem} }]" }
-
+        allow(request).to receive(:execute) { '{ "status": false, "mensagem": "' + mensagem + '"}' }
       end
 
       it "returns mensagem value" do
@@ -47,12 +44,5 @@ describe Iesde::Api::AlterarStatusMatricula do
         end
       end
     end
-  end
-
-  describe '#tem_matricula?' do
-  end
-
-  describe '#salvo_com_sucesso?' do
-
   end
 end
