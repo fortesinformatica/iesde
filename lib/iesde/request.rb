@@ -15,29 +15,25 @@ module Iesde
       when '400'
         @retorno = res.body
       else
-        raise "DEU NAO CHAPA"
+        raise "Ocorreu um erro"
       end
-    end
-
-    def pega_campo(campo)
-      @retorno.map {|a| a[campo]}
     end
 
   private
 
     def build_uri(ask_for, format)
-      url          = Iesde::API.build_url(ask_for, format)
+      url           = Iesde::API.build_url(ask_for, format)
       _uri          = URI.parse(url)
       _uri.user     = Iesde.config.user
-      _uri.password = Iesde.config.password 
+      _uri.password = Iesde.config.password
 
       _uri
     end
 
     def pega_autorizacao(h)
-      res = pega_autenticacao(h)
+      res         = pega_autenticacao(h)
       digest_auth = Net::HTTP::DigestAuth.new
-      auth = digest_auth.auth_header @uri, res['www-authenticate'], 'POST'
+      auth        = digest_auth.auth_header @uri, res['www-authenticate'], 'POST'
 
       auth
     end

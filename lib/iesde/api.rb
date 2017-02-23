@@ -5,28 +5,40 @@ module Iesde
     def initialize(o_que, format, opts = {})
       tipo = tipo_requisicao(o_que)
 
-      @request = Request.new(tipo, format)
-      @all     = @request.execute(opts)
-    end
-
-    def todas
-      @all
+      request   = Request.new(tipo, format)
+      @response = request.execute(opts)
     end
 
     def as_json
-      JSON.parse(@all)
+      return JSON.parse(@response)
+    rescue JSON::ParserError
+      return @response
     end
 
-    def count
-      @all.size
+    def status
+      as_json["status"]
+    end
+
+    def tem_chave?(chave)
+      as_json.has_key?(chave)
+    end
+
+    def tem_matricula?
+      tem_chave?("MatriculaID")
+    end
+
+    def salvo_com_sucesso?
+      status == 1 && tem_matricula?
+    end
+
+    # Quando ocorre um erro, status = false, vem mensagem
+    def msg
+      msg = (status() == false) ? as_json['mensagem'] : as_json['msg']
+      sanitize(msg)
     end
 
     def self.build_url(ask_for, format)
       [ BASE, WEB_SERVICE, ask_for, 'format', FORMATS[format]].join('/')
-    end
-
-    def sanitize_campo campo
-      sanitize(as_json[campo])
     end
 
     #TODO: colocar em cada filho
@@ -54,7 +66,7 @@ module Iesde
       strings[o_que]
     end
 
-    FORMATS  = {  json: "json", html: 'html', xml: 'xml' }
+    FORMATS     = {  json: "json", html: 'html', xml: 'xml' }
     BASE        = 'http://ead.portalava.com.br'
     WEB_SERVICE = 'web_service'
   end
