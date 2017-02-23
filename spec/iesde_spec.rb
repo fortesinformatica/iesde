@@ -7,13 +7,15 @@ describe Iesde do
 
   describe "configure" do
 
-    let(:username) { "12345678" }
-    let(:password) { "123456789123456" }
+    let(:username)    { "12345678" }
+    let(:password)    { "123456789123456" }
+    let(:ead_api_key) { "asdfasdfasdfasdf" }
 
-    subject do 
+    subject do
       Iesde.configure do |config|
-        config.default_username = username
-        config.default_password = password
+        config.user        = username
+        config.password    = password
+        config.ead_api_key = ead_api_key
       end
     end
 
@@ -24,12 +26,15 @@ describe Iesde do
     end
 
     it "Has a username" do
-      expect(Iesde.config.default_username).to eq(username)
+      expect(Iesde.config.user).to eq(username)
     end
-      
+
     it "Has a password" do
-      expect(Iesde.config.default_password).to eq(password)
+      expect(Iesde.config.password).to eq(password)
+    end
+
+    it "Has a ead_api_key" do
+      expect(Iesde.config.ead_api_key).to eq(ead_api_key)
     end
   end
-
 end

@@ -1,34 +1,29 @@
 module Iesde
   module Model
     class Aula
-      attr_accessor :curso_id, :nome_curso, :categoria, :subcategoria, :id, :ordem, :tema, :autores, :duracao, :login_aluno, :cpf, :disciplina_id, :disciplina, :login, :senha, :curso
+      attr_accessor :matricula_id, :curso_id, :grade_id, :disciplina_id, :aula_id, :tema
 
       def initialize(*args)
-        @curso_id, @nome_curso, @categoria, @subcategoria, @id, @ordem, @tema, @autores, @duracao, @login_aluno, @cpf, @disciplina_id, @disciplina = args
+        @matricula_id, @curso_id, @grade_id, @disciplina_id, @aula_id, @tema = args
       end
 
-      def self.buscar params
-        client_obtem_aulas = WSDLClient.create :obtem_aulas
-        aulas = client_obtem_aulas.run params
-        aulas.each do |aula|
-          aula.login = params[:login]
-          aula.senha = params[:senha]
+      def self.buscar opts
+        aulas = Iesde::Api::ObterAula.new(:json, opts)
+
+        aulas.as_json.map do |disc|
+          params = {}
+          disc.map { |k,v| params[k.underscore.to_sym] = v }
+
+          Aula.new(*params.values)
         end
       end
 
-      def curso
-        @curso ||= Curso.find id: @curso_id, login: @login, senha: @senha
+      def link_video
+        video = Iesde::Api::ObterVideo.new(:json, {
+          'MatriculaID' => matricula_id,
+          'AulaID'      => aula_id
+        }).link
       end
-
-      def link_pdf email_aluno, cpf_aluno
-        client_buscar_arquivo = WSDLClient.create :buscararquivo
-        client_buscar_arquivo.run usuario: email_aluno, senha: cpf_aluno, curso: @curso_id, aula: @id, tipo: curso.tipo
-      end
-
-      def pdf_para aluno
-        link_pdf aluno.login_aluno, aluno.cpf
-      end
-
     end
   end
 end

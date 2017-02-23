@@ -1,5 +1,5 @@
 module Iesde
   class Config
-    attr_accessor :default_username, :default_password
+    attr_accessor :user, :password, :ead_api_key
   end
 end
