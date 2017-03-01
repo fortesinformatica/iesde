@@ -7,6 +7,8 @@ module Iesde
         @matricula_id, @login_id, @situacao, @dt_cadastro, @curso_id, @polo_id, @curso, @aluno, @cpf, @email, @situacao_descricao, @sexo = args
       end
 
+      def self.buscar(config = {})
+        matriculas_obtidas = Iesde::Api::ObterMatricula.new(:json, config)
 
         matriculas_obtidas.underscorize_fields(Matricula)
       end

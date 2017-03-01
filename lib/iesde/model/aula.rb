@@ -13,7 +13,7 @@ module Iesde
       end
 
       def link_video
-        video = Iesde::Api::ObterVideo.new(:json, {
+        Iesde::Api::ObterVideo.new(:json, {
           'MatriculaID' => matricula_id,
           'AulaID'      => aula_id
         }).link

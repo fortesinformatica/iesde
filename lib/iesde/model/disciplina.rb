@@ -7,8 +7,8 @@ module Iesde
         @disciplina_id, @grade_id, @curso_id, @computed, @sigla, @situacao, @carga_horaria, @ementa, @plano_aula = args
       end
 
-      def self.buscar
-        disciplinas = Iesde::Api::ObterDisciplina.new(:json)
+      def self.buscar(opts ={})
+        disciplinas = Iesde::Api::ObterDisciplina.new(:json, opts)
 
         disciplinas.underscorize_fields(Disciplina)
       end

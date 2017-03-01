@@ -1,7 +1,7 @@
 module Iesde
   class Request
-    def initialize(ask_for, format)
-      @uri     =  build_uri(ask_for, format)
+    def initialize(ask_for, format, config = {})
+      @uri     =  build_uri(ask_for, format, config)
       @format  = format
       @retorno = []
     end
