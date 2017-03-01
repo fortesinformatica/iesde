@@ -3,6 +3,7 @@ module Iesde
     class ObterMatricula < ::Iesde::API 
       def initialize(format)
         super(:matriculas, format)
+      include Underscorable
       end
     end
   end

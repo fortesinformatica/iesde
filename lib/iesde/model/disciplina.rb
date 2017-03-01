@@ -10,12 +10,7 @@ module Iesde
       def self.buscar
         disciplinas = Iesde::Api::ObterDisciplina.new(:json)
 
-        disciplininhas = disciplinas.as_json.map do |disc|
-          params = {}
-          disc.map { |k,v| params[k.underscore.to_sym] = v }
-
-          Disciplina.new(*params.values)
-        end
+        disciplinas.underscorize_fields(Disciplina)
       end
 
       def aulas matricula_id
@@ -24,7 +19,6 @@ module Iesde
           'DisciplinaID' => disciplina_id
         })
       end
-
 
       def dados_pdf matricula_id
         Iesde::Api::ObterDadosPdf.new(:json, {
@@ -35,7 +29,7 @@ module Iesde
 
       def link_pdf matricula_id, livro_disciplina_id
         Iesde::Api::ObterLinkPdf.new(:json, {
-          'MatriculaID'  => matricula_id,
+          'MatriculaID'       => matricula_id,
           'LivroDisciplinaID' => livro_disciplina_id
         }).link
       end
