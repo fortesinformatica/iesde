@@ -1,6 +1,8 @@
 module Iesde
   module Model
     class Aula
+      include Stringable
+
       attr_accessor :matricula_id, :curso_id, :grade_id, :disciplina_id, :aula_id, :tema
 
       def initialize(*args)

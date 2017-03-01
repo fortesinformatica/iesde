@@ -1,6 +1,8 @@
 module Iesde
   module Model
     class Disciplina
+      include Stringable
+
       attr_accessor :disciplina_id, :grade_id, :curso_id, :computed, :sigla, :situacao, :carga_horaria, :ementa, :plano_aula
 
       def initialize(*args)

@@ -1,6 +1,8 @@
 module Iesde
   module Model
     class Matricula
+      include Stringable
+
       attr_accessor :matricula_id, :login_id, :situacao, :dt_cadastro, :curso_id, :polo_id, :curso, :aluno, :cpf, :email, :situacao_descricao, :sexo
 
       def initialize(*args)
