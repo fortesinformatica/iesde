@@ -1,258 +1,181 @@
 # Iesde
 
-Interface para acesso ao WebService do [Iesde][siteiesde] para sistemas Rails. Não se trata de uma ferramenta oficial pois foi desenvolvida por necessidade dos nossos desenvolvedores. Sintam-se livres para contribuir.
-
-## Índice
-\- [Iesde](#iesde)
-  - [Versão](#vers%C3%A3o)
-  - [Instalação](#instala%C3%A7%C3%A3o)
-  - [Uso](#uso)
-    - [Listagem de Cursos](#listagem-de-cursos)
-    - [Busca de curso por Id](#busca-de-curso-por-id)
-    - [Listagem de Aulas](#listagem-de-aulas)
-    - [Listagem de Matrículas](#listagem-de-matr%C3%ADculas)
-    - [PDF](#pdf)
-    - [Matricular Aluno](#matricular-aluno)
-    - [Inativação de Aluno](#inativa%C3%A7%C3%A3o-de-aluno)
-    - [Logout](#logout)
-  - [Default Configs](#default-configs)
-  - [Relacionamentos](#relacionamentos)
+Interface para acesso ao WebService do [IESDE](http://www.iesde.com.br) para sistemas Rails. Não se trata de uma ferramenta oficial pois foi desenvolvida por necessidade dos nossos desenvolvedores. Sintam-se livres para contribuir.
 
 ## Versão
-1.1.1 - Seguindo a documentação v14 do WebService
+2.0.0 - Seguindo a nova documentação WebService REST. Caso esteja usando o antigo WebService SOAP utilize a [documentação da versão 1.1.1](README-OLD-API.md)
 
 ## Instalação
 
 ```sh
-gem install iesde -v 1.1.1
+gem install iesde -v 2.0.0
 ```
 
 Ou no seu Gemfile
 ```ruby
-gem 'iesde', '~> 1.1.1'
+gem 'iesde', '~> 2.0.0'
 ```
 
-## Uso
+### Listagem de Disciplinas
 
-> Todas as buscas no WebService exigem os parâmetros **login** e **senha**.
-> Caso você possua apenas um usuário de acesso ao WebService, você pode configurar esses parâmetros em um initializer.
-> Veja na seção [Default Configs](#default-configs).
-
-### Listagem de Cursos
-
-Retorna um array de ```Iesde::Model::Curso```
+Retorna um array de ```Iesde::Model::Disciplina```
 ```ruby
-parametros = {
-    login:  "0123456789",
-    senha: "9d7d5741ab23397aa15937fcd4121a32",
-    busca: "",
-    tipo: "C",
-    site: "",
-    idCurso: ""
-}
-cursos = Iesde::Model::Curso.buscar(parametros)
-=> [#<Iesde::Model::Curso>, #<Iesde::Model::Curso>, #<Iesde::Model::Curso>, ...]
-```
-### Busca de curso por Id
-Esta busca realiza uma varredura em todos os cursos e pacotes em busca do **id** passado como parâmetro.
+disciplinas = Iesde::Model::Disciplina.buscar
+=> [#<Iesde::Model::Disciplina>, #<Iesde::Model::Disciplina>, #<Iesde::Model::Disciplina>, ...]
 
-Retorna um ```Iesde::Model::Curso```
-```ruby
-curso = Iesde::Model::Curso.find id: 1000, login: "0123456789", senha: "9d7d5741ab23397aa15937fcd4121a32"
-=> #<Iesde::Model::Curso>
+disciplina = disciplinas.first
 
-curso.id
-=> "1000"
+disciplina.curso_id
+=> "123456"
 
-curso.nome
-=> "A BUSCA DA PERFEICÃO"
-```
-
-### Listagem de Aulas
-Retorna um array de ```Iesde::Model::Aula```
-
-```ruby
-parametros = {
-    login: "0123456789",
-    senha: "9d7d5741ab23397aa15937fcd4121a32",
-    loginAluno: "",
-    cpf: "",
-    curso: "1000",
-    ancora: "",
-    tipo: "C"
-}
-aulas = Iesde::Model::Aula.buscar(parametros)
-=> [#<Iesde::Model::Aula>, #<Iesde::Model::Aula>, #<Iesde::Model::Aula>, ...]
-```
-
-Ou já tendo o curso carregado...
-
-```ruby
-curso.aulas
-=> [#<Iesde::Model::Aula>, #<Iesde::Model::Aula>, #<Iesde::Model::Aula>, ...]
+disciplina.computed
+=> "ELABORAÇÃO DE ROTEIROS E PACOTES"
 ```
 
 ### Listagem de Matrículas
 
-Retorna um array de ```Iesde::Model::Matricula ```
-
+Retorna um array de ```Iesde::Model::Matricula```
 ```ruby
-parametros = {
-    login: "0123456789",
-    senha: "9d7d5741ab23397aa15937fcd4121a32",
-    curso: "6376",
-    tipo: "C"
-}
-Iesde::Model::Matricula.buscar(parametros)
+Matriculas = Iesde::Model::Matricula.buscar
 => [#<Iesde::Model::Matricula>, #<Iesde::Model::Matricula>, #<Iesde::Model::Matricula>, ...]
-```
-Ou já tendo o curso carregado...
 
-```ruby
-curso.matriculas
-=> [#<Iesde::Model::Matricula>, #<Iesde::Model::Matricula>, #<Iesde::Model::Matricula>, ...]
-```
-### PDF
+matricula = matriculas.first
 
-Para obter o link do PDF da aula, basta carregar o modelo ```Iesde::Model::Aula``` e usar os métodos auxiliares:
+matricula.matricula_id
+=> "123456"
 
-```ruby
-# passando email e cpf do aluno...
-aula.link_pdf "aluno@minhaorganizacao.com.br", "12345678900"
-=> "http://ws.videoaulasonline.com.br/pdf/imprime/caracteres_malucos"
+matricula.aluno
+=> "Fulano da Silva"
 
-# passando um modelo Iesde::Model::Aluno...
-aula.link_para aluno
-=> "http://ws.videoaulasonline.com.br/pdf/imprime/caracteres_malucos"
+matricula.situacao
+=> "A"
 ```
 
-### Matricular Aluno
+### Criar uma Matrícula
 
-Realiza a matrícula no WebService e retorna um ```Iesde::Model::Matricula```
+Retorna a ```Iesde::Model::Matricula``` criada quando parâmetros enviados corretamente.
 
 ```ruby
-parametros = {
-    login: "0190001388",
-    senha: "9d7d5741ab23397afeb81829a3d5ebd7",
-    loginAluno: "aluno@minhaorganizacao.com.br",
-    cpf: "12345678900",
-    curso: "1000",
-    duracao: "90",
-    tipo: "C",
-    valor: ""
+params = {
+  'CursoID'     => 123456 ,
+  'PoloID'      => 123,
+  'Nome'        => 'Aluno da Silva',
+  'CPF'         => '12345678900',
+  'Email'       => 'aluno@email.com',
+  'RG'          => '2003000152000',
+  'OrgaoRG'     => 'ABC',
+  'UFRG'        => 'CE',
+  'CEP'         => '60120-140',
+  'Endereco'    => 'Rua dos Anzois Pereira',
+  'Bairro'      => 'Bairroso',
+  'Numero'      => 123,
+  'Compl'       => 'Bloco Z apto 500',
+  'Telefone'    => '8588889999',
+  'Celular'     => '8599999999',
+  'DtNascto'    => '06/01/1966',
+  'EstadoCivil' => 1,
+  'Sexo'        => 'M'
 }
-matricula = Iesde::Model::Matricula.criar(parametros)
+
+matricula = Iesde::Model::Matricula.criar(params)
 => #<Iesde::Model::Matricula>
 ```
 
-### Inativação de Aluno
-
-Inativa a matrícula e retorna ```true``` se sucesso.
+Se não, uma ```Iesde::Error::WSError``` é lançada com a mensagem do erro.
 
 ```ruby
-parametros = {
-    login: "0190001388",
-    senha: "9d7d5741ab23397afeb81829a3d5ebd7",
-    :"LoginID" => "12345"
-}
-Iesde::Model::Matricula.inativar(parametros)
-=> true
+Iesde::Model::Matricula.criar(parametros)
+=> CPF inválido! (Iesde::Error::WSError)
+
+Iesde::Model::Matricula.criar(parametros2)
+=> Erro: Encontramos o CPF ( 12345678900 ) para o E-MAIL ( usuario@outro.com ) (Iesde::Error::WSError)
+
+Iesde::Model::Matricula.criar(parametros)
+=> Curso é um campo obrigatório! (Iesde::Error::WSError)
 ```
 
-Ou caso já possua a matrícula carregada...
+Nem todos os parâmetros são obrigatórios. Você pode utilizar o método: 
 
 ```ruby
-matricula.inativar
-=> true
+criar_com_campos_obrigatorios(id_curso, nome, cpf, email, cep, numero_casa)
 ```
-### Logout
-
-Realiza logout do aluno e retorna ```true``` se sucesso.
+que retorna matrícula
 
 ```ruby
-parametros = {
-    login: "0190001388",
-    senha: "9d7d5741ab23397afeb81829a3d5ebd7",
-    loginAluno: "aluno@minhaorganizacao.com.br",
-    cpf: "12345678900"
-}
-Iesde::Model::Aluno.logout(parametros)
-=> true
+  matricula = Iesde::Model::Matricula.criar_com_campos_obrigatorios(123456, 'Fulan Da Silva', '12345678900', 'fulan@email.com','60120-140', 123)
+  => #<Iesde::Model::Matricula>
 ```
 
-Ou você pode obter a instância de ```Iesde::Model::Aluno``` e chamar diretamente...
+Você pode ativar ou desativar uma matrícula através dos métodos
 
 ```ruby
-aluno = matricula.aluno
-=> #<Iesde::Model::Aluno>
-aluno.logout
-=> true
+  matricula = matricula.ativar!
+  => #<Iesde::Model::Matricula>
+
+  matricula.situacao
+  => "A"
+
+  matricula = matricula.inativar!
+  => #<Iesde::Model::Matricula>
+
+  matricula.situacao
+  => "I"
 ```
 
-```ruby
-aluno = curso.matriculas.first.aluno
-=> #<Iesde::Model::Aluno>
-aluno.logout
-=> true
-```
+### Listagem de Aulas
 
-## Default Configs
-Caso você utilize apenas um usuário do WebService em sua aplicação, seria interessante não passar os parâmetros **login** e **senha** em toda busca.
-
-Você pode configurar num initializer esses parâmetros:
+Retorna um array de ```Iesde::Model::Aula``` para a matrícula cujo id é passado como parâmetro.
 
 ```ruby
-Iesde::configure do |config|
-    config.default_username = "0190001388"
-    config.default_password = "9d7d5741ab23397afeb81829a3d5ebd7"
-end
-```
+# Pega uma disciplina
 
-Então poderá realizar as requisições sem passar estes parâmetros. Exemplos:
+disciplina = Iesde::Model::Disciplina.buscar.first
+=> #<Iesde::Model::Disciplina>
 
-```ruby
-cursos = Iesde::Model::Curso.buscar busca: "", tipo: "C", site: "", idCurso: ""
-=> [#<Iesde::Model::Curso>, #<Iesde::Model::Curso>, #<Iesde::Model::Curso>, ...]
+# Lista suas aulas
 
-curso = Iesde::Model::Curso.find id: 1000
-=> #<Iesde::Model::Curso>
-
-Iesde::Model::Matricula.inativar :"LoginID" => "12345"
-=> true
-```
-
-## Relacionamentos
-
- - Um ```Iesde::Model::Curso``` possui várias ```Iesde::Model::Aula```e várias ```Iesde::Model::Matricula```
- - Uma ```Iesde::Model::Matricula``` possui um ```Iesde::Model::Aluno``` e um ```Iesde::Model::Curso```
- - Logo ```Iesde::Model::Curso``` possui vários ```Iesde::Model::Aluno```
-```ruby
-# Busca aulas no WS do curso
-curso.aulas
+disciplina.aulas(matricula.matricula_id)
 => [#<Iesde::Model::Aula>, #<Iesde::Model::Aula>, #<Iesde::Model::Aula>, ...]
-
-aula.curso
-=> #<Iesde::Model::Curso>
-
-curso.matriculas
-=> [#<Iesde::Model::Matricula>, #<Iesde::Model::Matricula>, #<Iesde::Model::Matricula>, ...]
-
-matricula.curso
-=> #<Iesde::Model::Curso>
-
-matricula.aluno
-=> #<Iesde::Model::Aluno>
-
-curso.alunos
-=> [#<Iesde::Model::Aluno>, #<Iesde::Model::Aluno>, #<Iesde::Model::Aluno>, ...]
 ```
 
-> A maioria destas operações só busca do WS uma vez. Ao buscar as aulas de um curso, elas já vem com o curso carregado em suas instâncias, evitando outra chamada ao WS para buscar o curso ao fazer ```aula.curso```.
+### Link para o PDF da Disciplina
+
+Recebe o id da matricula e retorna o link para o download do PDF
+
+```ruby
+# Pega uma disciplina
+
+disciplina = Iesde::Model::Disciplina.buscar.first
+=> #<Iesde::Model::Disciplina>
+
+# obtem link do pdf
+
+disciplina.pdf(matricula.matricula_id)
+=> "https:://linkparao.pdf"
+```
+
+### Link para o vídeo da aula
+
+Retorna o link para o video da aula
+
+```ruby
+# Pega uma disciplina
+
+disciplina = Iesde::Model::Disciplina.buscar.first
+=> #<Iesde::Model::Disciplina>
+
+# Pega uma aula
+aula = disciplina.aulas.first
+
+# obtem link do video
+
+aula.link_video
+=> "https:://linkparaovideo.mp4"
+```
 
 ## Licença
 
-MIT Licence. Copyright (c) 2016 Fortes Tecnologia. http://www.fortestecnologia.com.br
+MIT Licence. Copyright (c) 2017 Elore Tecnologia. http://www.elore.com.br
 
+![el](https://d257kcgu1mtlxa.cloudfront.net/organizacoes/logotipos/000/000/036/normal/Logo_Elore.png)
 ![ft](http://www.fortestecnologia.com.br/templates/fortesinfo/images/grupo-fortes.png)
-
-[siteiesde]:<http://www.iesde.com.br>

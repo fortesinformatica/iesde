@@ -10,4 +10,7 @@ end
 
 disciplinas = Iesde::Model::Disciplina.buscar
 
-ap disciplinas
+d = disciplinas.sample
+
+puts d.curso_id
+puts d.computed

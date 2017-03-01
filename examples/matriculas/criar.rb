@@ -12,14 +12,14 @@ end
 
 # Criar matriculas
 cpf        = '82432858816'
-cpf_errado = '824328816'
+cpf_errado = '04992817564'
 
 params = {
   'CursoID'     => 105689 ,
   'PoloID'      => 1,
   'Nome'        => 'Usuario Legal',
   'CPF'         => cpf_errado,
-  'Email'       => 'usuario@menoslegal.com',
+  'Email'       => 'usuario@muitolegal.com',
   'RG'          => '2003000152000',
   'OrgaoRG'     => 'Pulmão',
   'UFRG'        => 'CE',

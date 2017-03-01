@@ -39,6 +39,11 @@ module Iesde
           'LivroDisciplinaID' => livro_disciplina_id
         }).link
       end
+
+      def pdf matricula_id
+        livro_disciplina_id = dados_pdf(matricula_id).first["LivroDisciplinaID"]
+        link_pdf matricula_id, livro_disciplina_id
+      end
     end
   end
 end
