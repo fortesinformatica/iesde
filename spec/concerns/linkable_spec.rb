@@ -11,7 +11,7 @@ describe Linkable do
       end
     end
 
-    it 'does something' do
+    it 'removes all \ from strings' do
       e = Example.new("\"https:\\/\\/ead.local.co\\/videos\\/aulas\\/cooolllllller\\/asdfasdf.pdf?secure=asdfasdf\"")
       expect(e.link).to eq('https://ead.local.co/videos/aulas/cooolllllller/asdfasdf.pdf?secure=asdfasdf')
     end
