@@ -1,26 +1,22 @@
 module Iesde
   module Model
     class Matricula
+      include Stringable
+
       attr_accessor :matricula_id, :login_id, :situacao, :dt_cadastro, :curso_id, :polo_id, :curso, :aluno, :cpf, :email, :situacao_descricao, :sexo
 
       def initialize(*args)
         @matricula_id, @login_id, @situacao, @dt_cadastro, @curso_id, @polo_id, @curso, @aluno, @cpf, @email, @situacao_descricao, @sexo = args
       end
 
-      def self.buscar
-        matriculas_obtidas = Iesde::Api::ObterMatricula.new(:json)
+      def self.buscar(config = {})
+        matriculas_obtidas = Iesde::Api::ObterMatricula.new(:json, config)
 
-        matriculas_obtidas.as_json.map do |matricula|
-          params = {}
-
-          matricula.map { |k,v| params[k.underscore.to_sym] = v }
-
-          Matricula.new(*params.values)
-        end
+        matriculas_obtidas.underscorize_fields(Matricula)
       end
 
       def self.criar params
-        matricula      = Iesde::Api::CriarMatricula.new(:json, params) #.as_json
+        matricula = Iesde::Api::CriarMatricula.new(:json, params)
 
         if matricula.salvo_com_sucesso?
           Iesde::Model::Matricula.buscar.select do |mat|
@@ -42,9 +38,8 @@ module Iesde
         )
       end
 
-      def self.alterar_status params
-        api      = Iesde::Api::AlterarStatusMatricula.new(:json, params)
-        retorno  = api.as_json
+      def self.alterar_status(params)
+        api = Iesde::Api::AlterarStatusMatricula.new(:json, params)
 
         if api.salvo_com_sucesso?
           api.msg

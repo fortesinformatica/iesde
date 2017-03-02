@@ -37,9 +37,11 @@ module Iesde
     autoload :Aula,       "iesde/model/aula"
   end
 
-  autoload :VERSION,  "iesde/version"
-  autoload :Config,   "iesde/config"
-  autoload :Linkable, "concerns/linkable"
+  autoload :VERSION,       "iesde/version"
+  autoload :Config,        "iesde/config"
+  autoload :Linkable,      "concerns/linkable"
+  autoload :Underscorable, "concerns/underscorable"
+  autoload :Stringable,    "concerns/stringable"
 
   mattr_accessor :config
 

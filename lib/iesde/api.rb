@@ -3,7 +3,8 @@ module Iesde
     include ActionView::Helpers::SanitizeHelper
 
     def initialize(o_que, format, opts = {})
-      tipo = tipo_requisicao(o_que)
+      tipo   = tipo_requisicao(o_que)
+      config(opts)
 
       request   = Request.new(tipo, format)
       @response = request.execute(opts)
@@ -69,5 +70,19 @@ module Iesde
     FORMATS     = {  json: "json", html: 'html', xml: 'xml' }
     BASE        = 'http://ead.portalava.com.br'
     WEB_SERVICE = 'web_service'
+
+  private
+
+    def config(opts = {})
+      return unless opts.has_key? :config
+
+      config = opts[:config]
+
+      Iesde.configure do |c|
+        c.user        = config[:user]
+        c.password    = config[:password]
+        c.ead_api_key = config[:ead_api_key]
+      end
+    end
   end
 end

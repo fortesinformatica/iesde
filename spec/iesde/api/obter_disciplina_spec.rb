@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Iesde::Api::ObterDisciplina do
 
-    subject {Iesde::Api::ObterDisciplina.new(format) }
+    subject {Iesde::Api::ObterDisciplina.new(format, {}) }
 
     let(:format) { :json }
 

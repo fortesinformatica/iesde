@@ -13,7 +13,7 @@ describe Iesde::Model::Matricula do
 
       it "calls ObterMatricula.new" do
         VCR.use_cassette('buscar_matricula') do
-          expect(Iesde::Api::ObterMatricula).to receive(:new).with(:json).and_call_original
+          expect(Iesde::Api::ObterMatricula).to receive(:new).with(:json, {}).and_call_original
           subject
         end
       end

@@ -13,7 +13,7 @@ describe Iesde::Model::Disciplina do
 
     it 'calls ObterDisciplina.new with :json' do
       VCR.use_cassette('buscar_disciplina') do
-        expect(Iesde::Api::ObterDisciplina).to receive(:new).with(:json).and_call_original
+        expect(Iesde::Api::ObterDisciplina).to receive(:new).with(:json, {}).and_call_original
         subject
       end
     end
