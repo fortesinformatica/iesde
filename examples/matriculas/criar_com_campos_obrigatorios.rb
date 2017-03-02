@@ -9,7 +9,7 @@ Iesde.configure do |c|
 end
 
 matricula = Iesde::Model::Matricula.criar_com_campos_obrigatorios(
-  105689,
+  12345,
   'Heron Da Silva',
   '83550113501',
   'heron@email2.com',

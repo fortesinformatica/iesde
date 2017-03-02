@@ -8,17 +8,15 @@ Iesde.configure do |c|
   c.ead_api_key = ENV['EAD_API_KEY']
 end
 
-
-
 # Criar matriculas
 cpf        = '82432858816'
 cpf_errado = '04992817564'
 
 params = {
-  'CursoID'     => 105689 ,
+  'CursoID'     => 12345 ,
   'PoloID'      => 1,
   'Nome'        => 'Usuario Legal',
-  'CPF'         => cpf_errado,
+  'CPF'         => cpf,
   'Email'       => 'usuario@muitolegal.com',
   'RG'          => '2003000152000',
   'OrgaoRG'     => 'Pulmão',
@@ -35,7 +33,6 @@ params = {
   'Sexo'        => 'M'
 }
 
-# matricula = Iesde::Model::Matricula.criar params
 matricula = Iesde::Model::Matricula.criar(params)
 
 ap matricula

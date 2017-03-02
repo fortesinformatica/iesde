@@ -9,8 +9,8 @@ Iesde.configure do |c|
 end
 
 aulas = Iesde::Model::Aula.buscar({
-  'MatriculaID'  => 57238,
-  'DisciplinaID' => 203
+  'MatriculaID'  => 12345,
+  'DisciplinaID' => 123
 })
 
 ap aulas

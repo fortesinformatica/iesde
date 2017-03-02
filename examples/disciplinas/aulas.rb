@@ -8,6 +8,6 @@ Iesde.configure do |c|
   c.ead_api_key = ENV['EAD_API_KEY']
 end
 
-disciplina = Iesde::Model::Disciplina.buscar.select {|d| d.disciplina_id.to_i == 203  }.first
+disciplina = Iesde::Model::Disciplina.buscar.select {|d| d.disciplina_id.to_i == 123  }.first
 
-ap disciplina.aulas(57238)
+ap disciplina.aulas(12345)
