@@ -16,6 +16,22 @@ Ou no seu Gemfile
 gem 'iesde', '~> 2.0.0'
 ```
 
+
+## Default Configs
+Caso você utilize apenas um usuário do WebService em sua aplicação, seria interessante não passar as chaves de acesso em toda busca.
+
+Você pode configurar num initializer esses parâmetros:
+
+```ruby
+# config/initializers/iesde.rb
+
+Iesde.configure do |c|
+  c.user        = "1234567890123456"
+  c.password    = "1234567890123456"
+  c.ead_api_key = "1234567890123456"
+end
+```
+
 ### Listagem de Disciplinas
 
 Retorna um array de ```Iesde::Model::Disciplina```
@@ -172,6 +188,27 @@ aula = disciplina.aulas.first
 aula.link_video
 => "https:://linkparaovideo.mp4"
 ```
+
+## Passando chaves de acesso dinamicamente
+
+Todas as funções do sistema permitem que sejam passadas as chaves de acesso de forma dinâmica limitando-se àquela ação.
+
+Ex:
+```ruby
+aulas = Iesde::Model::Aula.buscar({
+    'MatriculaID'  => 12345,
+    'DisciplinaID' => 123,
+    config: {
+      user:         ENV['IESDE_USER'],
+      password:     ENV['IESDE_PWD'],
+      ead_api_key:  ENV['EAD_API_KEY']
+    }
+  })
+```
+
+## Exemplos
+
+Você pode ver exemplos de utilização da gem na pasta [examples](https://github.com/fortesinformatica/iesde/tree/master/examples).
 
 ## Licença
 
