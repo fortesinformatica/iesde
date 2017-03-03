@@ -1,7 +1,8 @@
 module Iesde
   class Request
-    def initialize(ask_for, format, config = {})
-      @uri     =  build_uri(ask_for, format)
+    def initialize(ask_for, format, api)
+      @api     = api[:config]
+      @uri     = build_uri(ask_for, format)
       @format  = format
       @retorno = []
     end
@@ -24,10 +25,24 @@ module Iesde
     def build_uri(ask_for, format)
       url           = Iesde::API.build_url(ask_for, format)
       _uri          = URI.parse(url)
-      _uri.user     = Iesde.config.user
-      _uri.password = Iesde.config.password
+      _uri.user     = @api[:user]
+      _uri.password = @api[:password]
 
       _uri
+    end
+
+    def do_the_post(opts = {})
+      h    = config_host
+      auth = pega_autorizacao(h)
+
+      req = Net::HTTP::Post.new(@uri.request_uri)
+      req.add_field 'Authorization', auth
+      req.add_field 'ead-api-key', @api[:ead_api_key]
+      req.set_form_data(opts)
+
+      res = h.request(req)
+
+      res
     end
 
     def pega_autorizacao(h)
@@ -50,19 +65,6 @@ module Iesde
       http.set_debug_output $stderr if ENV['DEBUG']
 
       http
-    end
-
-    def do_the_post(opts = {})
-      h    = config_host
-      auth = pega_autorizacao(h)
-
-      req = Net::HTTP::Post.new(@uri.request_uri)
-      req.add_field 'Authorization', auth
-      req.add_field 'ead-api-key', Iesde.config.ead_api_key
-      req.set_form_data(opts)
-
-      res = h.request(req)
-      res
     end
   end
 end
