@@ -14,11 +14,11 @@ module Iesde
         aulas.underscorize_fields(Aula)
       end
 
-      def link_video
+      def link_video(opts = {})
         Iesde::Api::ObterVideo.new(:json, {
           'MatriculaID' => matricula_id,
           'AulaID'      => aula_id
-        }).link
+        }.merge(opts)).link
       end
     end
   end

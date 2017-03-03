@@ -48,18 +48,18 @@ module Iesde
         end
       end
 
-      def ativar!
+      def ativar!(opts = {})
         Iesde::Model::Matricula.alterar_status({
           'MatriculaID' => self.matricula_id,
           'Situacao'    => 'A'
-        })
+        }.merge(opts))
       end
 
-      def inativar!
+      def inativar!(opts = {})
         Iesde::Model::Matricula.alterar_status({
           'MatriculaID' => self.matricula_id,
           'Situacao'    => 'I'
-        })
+        }.merge(opts))
       end
     end
   end
