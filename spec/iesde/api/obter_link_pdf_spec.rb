@@ -14,13 +14,23 @@ describe Iesde::Api::ObterLinkPdf do
 
   let(:request) { double('request') }
 
+  let(:param) {
+    {
+      config: {
+        user:        ENV['IESDE_USER'],
+        password:    ENV['IESDE_PWD'],
+        ead_api_key: ENV['EAD_API_KEY']
+      }
+    }
+  }
+
   before do
     allow(request).to receive(:execute) { }
   end
 
   describe '#initialize' do
     it "call Request" do
-      expect(Iesde::Request).to receive(:new).with('getPdf', :json) { request }
+      expect(Iesde::Request).to receive(:new).with('getPdf', :json, param) { request }
       subject
     end
   end

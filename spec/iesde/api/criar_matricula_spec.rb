@@ -10,6 +10,17 @@ describe Iesde::Api::CriarMatricula do
     }
   }
 
+
+  let(:param) {
+    {
+      config: {
+        user:        ENV['IESDE_USER'],
+        password:    ENV['IESDE_PWD'],
+        ead_api_key: ENV['EAD_API_KEY']
+      }
+    }
+  }
+
   let(:request) { double('request') }
   subject {Iesde::Api::CriarMatricula.new(format, opts) }
 
@@ -19,7 +30,7 @@ describe Iesde::Api::CriarMatricula do
 
   describe '#initialize' do
     it "call Request" do
-      expect(Iesde::Request).to receive(:new).with('cadastro', :json) { request }
+      expect(Iesde::Request).to receive(:new).with('cadastro', :json, param) { request }
       subject
     end
   end

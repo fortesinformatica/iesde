@@ -12,6 +12,16 @@ describe Iesde::Api::ObterDadosPdf do
     }
   }
 
+  let(:param) {
+    {
+      config: {
+        user:        ENV['IESDE_USER'],
+        password:    ENV['IESDE_PWD'],
+        ead_api_key: ENV['EAD_API_KEY']
+      }
+    }
+  }
+
   let(:request) { double('request') }
 
   before do
@@ -20,7 +30,7 @@ describe Iesde::Api::ObterDadosPdf do
 
   describe '#initialize' do
     it "call Request" do
-      expect(Iesde::Request).to receive(:new).with('getPdfsDisciplina', :json) { request }
+      expect(Iesde::Request).to receive(:new).with('getPdfsDisciplina', :json, param) { request }
       subject
     end
   end

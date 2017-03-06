@@ -3,6 +3,14 @@ require 'spec_helper'
 describe Iesde::Api::AlterarStatusMatricula do
   let(:format)  { :json }
   let(:opts)    { { a: 1 } }
+  let(:api)     {
+    { config: {
+        user:        ENV['IESDE_USER'],
+        password:    ENV['IESDE_PWD'],
+        ead_api_key: ENV['EAD_API_KEY']
+      }
+    }
+  }
   let(:request) { double('request') }
   let(:status)  {  '{"status": 1 }' }
 
@@ -16,7 +24,7 @@ describe Iesde::Api::AlterarStatusMatricula do
   describe '#initialize' do
     it "call Request" do
       VCR.use_cassette('alterar_matricula') do
-        expect(Iesde::Request).to receive(:new).with('situacao', :json) { request }
+        expect(Iesde::Request).to receive(:new).with('situacao', :json, api) { request }
         subject
       end
     end

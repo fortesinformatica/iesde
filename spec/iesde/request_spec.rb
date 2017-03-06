@@ -5,15 +5,17 @@ describe Iesde::Request do
   let(:port)    { 80 }
   let(:format)  { :json }
   let(:ask_for) { 'getCursos' }
-  let(:subject) { Iesde::Request.new(ask_for, format) }
 
-  context 'new' do
-    it 'does something' do
-      VCR.use_cassette('request') do
-        expect(subject).to be_a Iesde::Request
-      end
-    end
-  end
+  let(:config) {
+    {
+      config: {
+        user:        ENV['IESDE_USER'],
+        password:    ENV['IESDE_PWD'],
+        ead_api_key: ENV['EAD_API_KEY']
+      }
+    }
+  }
+  let(:subject) { Iesde::Request.new(ask_for, format, config) }
 
   context 'execute' do
     it 'calls NET::HTTP.new' do

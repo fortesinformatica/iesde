@@ -10,6 +10,16 @@ describe Iesde::Api::ObterVideo do
       }
     }
 
+    let(:param) {
+      {
+        config: {
+          user:        ENV['IESDE_USER'],
+          password:    ENV['IESDE_PWD'],
+          ead_api_key: ENV['EAD_API_KEY']
+        }
+      }
+    }
+
     let(:request) { double('request') }
 
     subject {Iesde::Api::ObterVideo.new(format, opts) }
@@ -18,7 +28,7 @@ describe Iesde::Api::ObterVideo do
     end
 
     it "call Request" do
-      expect(Iesde::Request).to receive(:new).with('getVideoAula', :json) { request }
+      expect(Iesde::Request).to receive(:new).with('getVideoAula', :json, param) { request }
       subject
     end
 

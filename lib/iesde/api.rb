@@ -84,8 +84,6 @@ module Iesde
         opts.merge!(config: {})
       end
 
-      # opts.merge!(config: {}) unless opts.has_key?(:config)
-
       _config = opts[:config]
 
       @user        = _config[:user]        || Iesde.config.user
