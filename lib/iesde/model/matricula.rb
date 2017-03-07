@@ -15,11 +15,11 @@ module Iesde
         matriculas_obtidas.underscorize_fields(Matricula)
       end
 
-      def self.criar params
+      def self.criar(params = {})
         matricula = Iesde::Api::CriarMatricula.new(:json, params)
 
         if matricula.salvo_com_sucesso?
-          Iesde::Model::Matricula.buscar.select do |mat|
+          Iesde::Model::Matricula.buscar(params).select do |mat|
             mat.matricula_id.to_s == matricula.matricula_id_do_retorno.to_s
           end.first
         else
@@ -27,14 +27,16 @@ module Iesde
         end
       end
 
-      def self.criar_com_campos_obrigatorios(curso_id, nome, cpf, email, cep, numero)
+      def self.criar_com_campos_obrigatorios(curso_id, nome, cpf, email, cep, numero, opts = {})
         self.criar(
+        {
           'CursoID' => curso_id,
           'Nome'    => nome,
           'CPF'     => cpf,
           'Email'   => email,
           'CEP'     => cep,
           'Numero'  => numero
+        }.merge(opts)
         )
       end
 

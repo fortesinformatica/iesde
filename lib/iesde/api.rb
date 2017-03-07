@@ -3,11 +3,11 @@ module Iesde
     include ActionView::Helpers::SanitizeHelper
 
     def initialize(o_que, format, opts = {})
-      tipo   = tipo_requisicao(o_que)
+      @tipo   = tipo_requisicao(o_que)
       config_api(opts)
 
       params    = config_params(opts)
-      request   = Request.new(tipo, format, api_hash)
+      request   = Request.new(@tipo, format, api_hash)
       @response = request.execute(params)
     end
 
@@ -42,6 +42,12 @@ module Iesde
       [ BASE, WEB_SERVICE, ask_for, 'format', FORMATS[format]].join('/')
     end
 
+    FORMATS     = { json: "json", html: 'html', xml: 'xml' }
+    BASE        = 'http://ead.portalava.com.br'
+    WEB_SERVICE = 'web_service'
+
+  private
+
     def tipo_requisicao(o_que)
       strings = {
         cursos:             'getCursos',
@@ -68,12 +74,6 @@ module Iesde
       raise 'Você precisa passar um tipo de requisição válido'
     end
 
-    FORMATS     = { json: "json", html: 'html', xml: 'xml' }
-    BASE        = 'http://ead.portalava.com.br'
-    WEB_SERVICE = 'web_service'
-
-  private
-
     def config_params(opts)
       opts.reject { |k,_| k == :config }
     end
@@ -91,6 +91,7 @@ module Iesde
       @ead_api_key = _config[:ead_api_key] || Iesde.config.ead_api_key
 
     rescue NoMethodError => e
+      ap "requisicao para #{@tipo}" if ENV['DEBUG']
       raise 'Você precisa configurar usuario e password'
     end
 
