@@ -3,17 +3,17 @@
 Interface para acesso ao WebService do [IESDE](http://www.iesde.com.br) para sistemas Rails. Não se trata de uma ferramenta oficial pois foi desenvolvida por necessidade dos nossos desenvolvedores. Sintam-se livres para contribuir.
 
 ## Versão
-2.0.0 - Seguindo a nova documentação WebService REST. Caso esteja usando o antigo WebService SOAP utilize a [documentação da versão 1.1.1](README-OLD-API.md)
+2.0.1 - Seguindo a nova documentação WebService REST. Caso esteja usando o antigo WebService SOAP utilize a [documentação da versão 1.1.1](README-OLD-API.md)
 
 ## Instalação
 
 ```sh
-gem install iesde -v 2.0.0
+gem install iesde -v 2.0.1
 ```
 
 Ou no seu Gemfile
 ```ruby
-gem 'iesde', '~> 2.0.0'
+gem 'iesde', '~> 2.0.1'
 ```
 
 
@@ -37,7 +37,9 @@ end
 Retorna um array de ```Iesde::Model::Disciplina```
 ```ruby
 disciplinas = Iesde::Model::Disciplina.buscar
-=> [#<Iesde::Model::Disciplina>, #<Iesde::Model::Disciplina>, #<Iesde::Model::Disciplina>, ...]
+=> [#<Iesde::Model::Disciplina>, #<Iesde::Model::Disciplina>, #<Iesde::Model
+
+::Disciplina>, ...]
 
 disciplina = disciplinas.first
 
