@@ -40,6 +40,19 @@ module Iesde
         livro_disciplina_id = dados_pdf(matricula_id, opts).first["LivroDisciplinaID"]
         link_pdf(matricula_id, livro_disciplina_id, opts)
       end
+
+      def self.pdf(matricula_id, disciplina_id, opts={})
+        dados = Iesde::Api::ObterDadosPdf.new(:json, {
+          'MatriculaID'  => matricula_id,
+          'DisciplinaID' => disciplina_id
+        }.merge(opts)).as_json
+        livro_disciplina_id = dados.first["LivroDisciplinaID"]
+
+        Iesde::Api::ObterLinkPdf.new(:json, {
+          'MatriculaID'       => matricula_id,
+          'LivroDisciplinaID' => livro_disciplina_id
+        }.merge(opts)).link
+      end
     end
   end
 end
