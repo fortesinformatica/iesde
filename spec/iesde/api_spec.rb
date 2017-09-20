@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Iesde::API do
   let(:o_que)  { :cursos }
+  let(:vira)   { 'getCursos' }
   let(:format) { :json }
   let(:opts)   { {} }
   let(:request) { double('Request') }
@@ -17,7 +18,7 @@ describe Iesde::API do
   }
 
   before do
-    allow(Iesde::Request).to receive(:new).with('getCursos', format, config ) { request }
+    allow(Iesde::Request).to receive(:new).with(vira, format, config ) { request }
     allow(request).to receive(:execute) { response }
   end
 
@@ -31,7 +32,7 @@ describe Iesde::API do
     context 'type of requisition' do
       context "when it's valid" do
         it 'requests with valid path' do
-          expect(Iesde::Request).to receive(:new).with('getCursos', format,  config)
+          expect(Iesde::Request).to receive(:new).with(vira, format,  config)
           subject
         end
 
@@ -50,18 +51,18 @@ describe Iesde::API do
 
             before do
               opts[:config] = config
+              allow(Iesde::Request).to receive(:new).with(vira, format, config ) { request }
             end
 
-            xit 'use the given configuration' do
+            it 'use the given configuration' do
+              expect(Iesde::Request).to receive(:new).with(vira, format, opts ) { request }
               subject
-              expect(Iesde::config.user).to        eq(config[:user])
-              expect(Iesde::config.password).to    eq(config[:password])
-              expect(Iesde::config.ead_api_key).to eq(config[:ead_api_key])
             end
 
             context 'it does not changes default values' do
               before do
                 opts[:config] = another_config
+                allow(Iesde::Request).to receive(:new).with(vira, format, opts ) { request }
               end
 
               it 'to new ones' do
@@ -85,7 +86,6 @@ describe Iesde::API do
 
         specify { expect{subject}.to raise_error { ArgumentError } }
       end
-
     end
   end
 

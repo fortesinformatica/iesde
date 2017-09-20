@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_dependency "savon", "~> 2.10"
   spec.add_dependency "json", "~> 1.7"
-  spec.add_dependency "activesupport", "~> 4.2"
+  spec.add_dependency "activesupport", "~> 5.0.1.rc1"
   spec.add_dependency "actionview"
   spec.add_dependency "net-http-digest_auth"
 
