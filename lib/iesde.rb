@@ -21,6 +21,8 @@ module Iesde
     autoload :ObterDadosPdf,          "iesde/api/obter_dados_pdf"
     autoload :ObterLinkPdf,           "iesde/api/obter_link_pdf"
     autoload :ObterVideo,             "iesde/api/obter_video"
+    autoload :ObterBancoQuestoes,     "iesde/api/obter_banco_questoes"
+    autoload :ObterAlternativas,      "iesde/api/obter_alternativas"
   end
 
   module Clients
@@ -32,9 +34,11 @@ module Iesde
   end
 
   module Model
-    autoload :Matricula,  "iesde/model/matricula"
-    autoload :Disciplina, "iesde/model/disciplina"
-    autoload :Aula,       "iesde/model/aula"
+    autoload :Matricula,   "iesde/model/matricula"
+    autoload :Disciplina,  "iesde/model/disciplina"
+    autoload :Aula,        "iesde/model/aula"
+    autoload :Questao,     "iesde/model/questao"
+    autoload :Alternativa, "iesde/model/alternativa"
   end
 
   autoload :VERSION,       "iesde/version"

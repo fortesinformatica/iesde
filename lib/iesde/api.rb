@@ -54,7 +54,7 @@ module Iesde
         matriculas:         'getMatriculas',
         grades:             'getGrades',
         questoes:           'getBancoQuestoes',
-        alternativas:       'getAlternativas',
+        alternativas:       'getAlternativasDisciplina',
         disciplinas:        'getDisciplinas',
         processos:          'getProcSeletivos',
         notas:              'notas',
