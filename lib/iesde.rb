@@ -23,6 +23,7 @@ module Iesde
     autoload :ObterVideo,             "iesde/api/obter_video"
     autoload :ObterBancoQuestoes,     "iesde/api/obter_banco_questoes"
     autoload :ObterAlternativas,      "iesde/api/obter_alternativas"
+    autoload :ObterCurso,             "iesde/api/obter_curso"
   end
 
   module Clients
@@ -36,6 +37,7 @@ module Iesde
   module Model
     autoload :Matricula,   "iesde/model/matricula"
     autoload :Disciplina,  "iesde/model/disciplina"
+    autoload :Curso,       "iesde/model/curso"
     autoload :Aula,        "iesde/model/aula"
     autoload :Questao,     "iesde/model/questao"
     autoload :Alternativa, "iesde/model/alternativa"
